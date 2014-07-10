@@ -2,7 +2,7 @@
  * Created by mor on 14-7-10.
  */
 
-var log4js = require('log4js');
+var log4js = require('/usr/local/lib/node_modules/log4js');
 log4js.configure({
     appenders: [
         { type: 'console' },{
