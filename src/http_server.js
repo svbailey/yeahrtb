@@ -2,7 +2,7 @@
  * Created by mor on 14-7-10.
  */
 var http = require('http');
-var logger = require('./logger').logger('http_server');
+var logger = require('./logger').logger(__filename.split("//")[-1]);
 
 
 http.createServer(function (req, res) {
