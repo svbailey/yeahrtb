@@ -20,7 +20,8 @@ exports.logger=function(tag){
                 mode: "worker",
                 appender:logFileConf
             }
-        ]
+        ],
+        replaceConsole: true
     });
     var log = log4js.getLogger(tag);
     log.setLevel('INFO');
@@ -37,7 +38,8 @@ exports.master_logger=function(tag){
                 mode: "master",
                 appender:logFileConf
             }
-        ]
+        ],
+        replaceConsole: true
     });
     var log = log4js.getLogger(tag);
     log.setLevel('INFO');
