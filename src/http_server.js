@@ -2,11 +2,14 @@
  * Created by mor on 14-7-10.
  */
 var http = require('http');
-var querystring=require('querystring');
+var url=require('url');
 
 
 exports.http_server = function(){
     return http.createServer(function (req, res) {
+
+        var pathname = url.parse(req.url).pathname;
+        console.log('pathname='+pathname);
         //只处理post的请求
         if(req.method=='POST'){
             var post='';
@@ -15,18 +18,23 @@ exports.http_server = function(){
             });
 
             req.on('end',function(){
-                post=querystring.parse(post);
+                var bid_data=JSON.parse(post);
+                console.log(bid_data.id);
                 var bid_json='hello';
                 bid(res,bid_json);
             });
 
-        }else{
+        }else if(req.method=='GET'){
+
+
+
+        }
+        else{
             no_bid(res);
         }
 
     });
 };
-
 
 
 //出价的时候的http信息返回

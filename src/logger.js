@@ -19,7 +19,10 @@ exports.logger=function(tag){
                 type: "multiprocess",
                 mode: "worker",
                 appender:logFileConf
+            },{
+                type:'console'
             }
+
         ],
         replaceConsole: true
     });
@@ -37,6 +40,8 @@ exports.master_logger=function(tag){
                 type: "multiprocess",
                 mode: "master",
                 appender:logFileConf
+            },{
+                type:'console'
             }
         ],
         replaceConsole: true
