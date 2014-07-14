@@ -11,38 +11,20 @@ var logFileConf= {
     "alwaysIncludePattern": true
 };
 
-exports.logger=function(tag){
+exports.logger=function(tag,appenderType){
+
+    appenderType=appenderType||'worker';
 
     log4js.configure({
-        appenders: [
+        appenders:[
             {
-                type: "multiprocess",
-                mode: "worker",
+                type: 'multiprocess',
+                mode: appenderType,
                 appender:logFileConf
             },{
                 type:'console'
             }
 
-        ],
-        replaceConsole: true
-    });
-    var log = log4js.getLogger(tag);
-    log.setLevel('INFO');
-
-    return log;
-};
-
-exports.master_logger=function(tag){
-
-    log4js.configure({
-        appenders: [
-            {
-                type: "multiprocess",
-                mode: "master",
-                appender:logFileConf
-            },{
-                type:'console'
-            }
         ],
         replaceConsole: true
     });

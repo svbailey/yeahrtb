@@ -14,7 +14,7 @@ if (cluster.isMaster) {
     for (var i = 0; i < numCPUs; i++) {
         cluster.fork();
     }
-    mylogger.master_logger('master').info('start server.');
+    mylogger.logger('master','master').info('start server.');
 
 
 } else {
