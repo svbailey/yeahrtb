@@ -20,6 +20,6 @@ if (cluster.isMaster) {
 } else {
 
     var logger=mylogger.logger('worker');
-    httpServer.http_server().listen(8000);
+    httpServer.http_server(logger).listen(8000);
     logger.info("Worker %d start.", process.pid);
 }

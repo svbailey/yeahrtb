@@ -5,13 +5,14 @@ var http = require('http');
 var url=require('url');
 
 
-exports.http_server = function(){
+exports.http_server = function(logger){
     return http.createServer(function (req, res) {
 
         var pathname = url.parse(req.url).pathname;
-        console.log('pathname='+pathname);
+        logger.info('pathname=>'+pathname);
+
         //只处理post的请求
-        if(req.method=='POST'){
+        if(req.method=='POST'&&pathname.indexOf('/bid')>0){
             var post='';
             req.on('data',function(chunk){
                 post+=chunk;
@@ -19,12 +20,12 @@ exports.http_server = function(){
 
             req.on('end',function(){
                 var bid_data=JSON.parse(post);
-                console.log(bid_data.id);
+                logger.info(bid_data.id);
                 var bid_json='hello';
                 bid(res,bid_json);
             });
 
-        }else if(req.method=='GET'){
+        }else if(req.method=='GET'&&pathname.indexOf('/win')>0){
 
 
 
