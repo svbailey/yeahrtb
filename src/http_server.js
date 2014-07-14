@@ -5,51 +5,62 @@ var http = require('http');
 var url=require('url');
 
 
-exports.http_server = function(logger){
-    return http.createServer(function (req, res) {
-
-        var pathname = url.parse(req.url).pathname;
-        logger.info('pathname=>'+pathname);
-
-        //只处理post的请求
-        if(req.method=='POST'&&pathname.indexOf('/bid')>0){
-            var post='';
-            req.on('data',function(chunk){
-                post+=chunk;
-            });
-
-            req.on('end',function(){
-                var bid_data=JSON.parse(post);
-                logger.info(bid_data.id);
-                var bid_json='hello';
-                bid(res,bid_json);
-            });
-
-        }else if(req.method=='GET'&&pathname.indexOf('/win')>0){
-
-
-
+paths={
+    'bid':function(req,res,logger){
+        //not post
+        if(req.method!='POST'){
+            res_bid.no_bid(res);
+            return;
         }
-        else{
-            no_bid(res);
-        }
+        //post
+        var post='';
+        req.on('data',function(chunk){
+            post+=chunk;
+        });
 
-    });
+        req.on('end',function(){
+            var bid_data=JSON.parse(post);
+            logger.info(bid_data.id);
+            var bid_json='hello';
+            res_bid.bid(res,bid_json);
+        });
+    },
+    'win':function(req,res,logger){
+
+    }
+
 };
 
 
-//出价的时候的http信息返回
-function bid(res,content){
+res_bid={
+    //出价的时候的http信息返回
+    'bid':function(res,content){
     res.writeHead(200, {'Content-Type': 'application/json',
         'Content-Length':content.length,
         'Connection': 'keep-alive'});
 
     res.end(content);
-}
-//不出价的时候的http信息返回
-function no_bid(res){
-    res.writeHead(204, {'Content-Length':0,
-        'Connection': 'keep-alive'});
-    res.end();
-}
+    },
+    //不出价的时候的http信息返回
+    'no_bid':function(res){
+        res.writeHead(204, {'Content-Length':0,
+            'Connection': 'keep-alive'});
+        res.end();
+    }
+};
 
+
+exports.http_server = function(logger){
+    return http.createServer(function (req, res) {
+
+        var pathname = url.parse(req.url).pathname;
+        pathname=pathname.split('/')[2];
+        logger.info('pathname=>'+pathname);
+        try{
+            paths[pathname].apply(this, [req, res,logger]);
+        }catch(err) {
+            res_bid.no_bid(res);
+        }
+
+    });
+};
