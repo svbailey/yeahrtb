@@ -2,31 +2,33 @@
  * Created by mor on 14-7-10.
  */
 var http = require('http');
-var url=require('url');
+var runtime= require('./runtime.js');
 var winNotify=require('./win_notify.js');
 
+
+
 paths={
-    'bid':function(req,res,logger){
+    'bid':function(runtimeObj){
         //not post
-        if(req.method!='POST'){
-            res_bid.no_bid(res);
+        if(runtimeObj.req.method!='POST'){
+            res_bid.no_bid(runtimeObj.res);
             return;
         }
         //post
         var post='';
-        req.on('data',function(chunk){
+        runtimeObj.req.on('data',function(chunk){
             post+=chunk;
         });
 
-        req.on('end',function(){
+        runtimeObj.req.on('end',function(){
             var bid_data=JSON.parse(post);
-            logger.info(bid_data.id);
+            runtimeObj.logger.info(bid_data.id);
             var bid_json='hello';
-            res_bid.bid(res,bid_json);
+            res_bid.bid(runtimeObj.res,bid_json);
         });
     },
-    'win':function(req,res,logger){
-        winNotify.winNotify(req,res,logger);
+    'win':function(runtimeObj){
+        winNotify.winNotify(runtimeObj);
     }
 
 };
@@ -53,11 +55,17 @@ res_bid={
 exports.http_server = function(logger){
     return http.createServer(function (req, res) {
 
-        var pathname = url.parse(req.url).pathname;
-        pathname=pathname.split('/')[2];
+
+        var pathname=req.url.split('/')[2];
         logger.info('pathname=>'+pathname);
+
+        var runtimeObj=new runtime();
+        runtimeObj.logger=logger;
+        runtimeObj.req=req;
+        runtimeObj.res=res;
+
         try{
-            paths[pathname].apply(this, [req, res,logger]);
+            paths[pathname].apply(this, [runtimeObj]);
         }catch(err) {
             res_bid.no_bid(res);
         }

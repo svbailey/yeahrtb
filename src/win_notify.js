@@ -5,13 +5,10 @@
  {AUCTION_IMP_ID}/${AUCTION_SEAT_ID}/${AUCTION_AD_ID}/${AUCTION_PRICE}/0.999
  */
 
-
-exports.winNotify=function(req,res,logger){
-    logger.category='win_notify';
-    var notify=req.url.split('/');
-    logger.info(notify.slice(3));
-    res.writeHead(200, {'Content-Length':0,
+exports.winNotify=function(runtimeObj){
+    var notify=runtimeObj.req.url.split('/');
+    runtimeObj.logger.info('win_notify=>',notify.slice(3).join(','));
+    runtimeObj.res.writeHead(200, {'Content-Length':0,
         'Connection': 'keep-alive'});
-    res.end();
-
+    runtimeObj.res.end();
 };

@@ -4,14 +4,7 @@
 
 var log4js = require('log4js');
 
-var logFileConf= {
-    "type": "dateFile",
-    "filename": "../logs/app.log",
-    "pattern": ".yyyy-MM-dd",
-    "alwaysIncludePattern": true
-};
-
-exports.logger=function(tag,appenderType){
+exports.logger=function(appenderType){
 
     appenderType=appenderType||'worker';
 
@@ -20,7 +13,13 @@ exports.logger=function(tag,appenderType){
             {
                 type: 'multiprocess',
                 mode: appenderType,
-                appender:logFileConf
+                appender:{
+                    "type": "dateFile",
+                    "filename": "../logs/app.log",
+                    "pattern": ".yyyy-MM-dd",
+                    "alwaysIncludePattern": true
+                }
+
             },{
                 type:'console'
             }
@@ -28,8 +27,6 @@ exports.logger=function(tag,appenderType){
         ],
         replaceConsole: true
     });
-    var log = log4js.getLogger(tag);
-    log.setLevel('INFO');
-
-    return log;
+    log4js.setGlobalLogLevel('INFO');
+    return log4js;
 };
