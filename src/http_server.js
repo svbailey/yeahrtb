@@ -3,7 +3,7 @@
  */
 var http = require('http');
 var url=require('url');
-
+var winNotify=require('./win_notify.js');
 
 paths={
     'bid':function(req,res,logger){
@@ -26,7 +26,7 @@ paths={
         });
     },
     'win':function(req,res,logger){
-
+        winNotify.winNotify(req,res,logger);
     }
 
 };
