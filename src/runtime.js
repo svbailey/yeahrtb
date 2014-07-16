@@ -21,12 +21,16 @@ module.exports=function(){
     /**
      *
      */
-    this.redis;
-
+    this.bidReqJSON;
 
     /**
      *
      */
-    this.bidJSON;
+    this.bidResJSON;
+    /**
+     *
+     */
+    this.redis;
+
 
 };

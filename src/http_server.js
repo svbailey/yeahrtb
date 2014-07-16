@@ -3,6 +3,7 @@
  */
 var http = require('http');
 var runtime= require('./runtime.js');
+var bid=require('./bid.js');
 var winNotify=require('./win_notify.js');
 
 
@@ -21,10 +22,9 @@ paths={
         });
 
         runtimeObj.req.on('end',function(){
-            var bid_data=JSON.parse(post);
-            runtimeObj.logger.info(bid_data.id);
-            var bid_json='hello';
-            res_bid.bid(runtimeObj.res,bid_json);
+            runtimeObj.bidReqJSON=JSON.parse(post);
+            bid.bid(runtimeObj);
+            res_bid.bid(runtimeObj.res,runtimeObj.bidResJSON);
         });
     },
     'win':function(runtimeObj){
