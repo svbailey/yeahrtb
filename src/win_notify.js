@@ -17,10 +17,10 @@ exports.winNotify=function(runtimeObj){
         var keyOfAdid='ad_budget_left_'+adid;
         var multi=runtimeObj.redis.multi();
         multi.get(keyOfAdid,function(err,res){
-            runtimeObj.logger.info('decr before =>',res);
+            runtimeObj.logger.info(keyOfAdid,',decr before =>',res);
         });
         multi.decrby(keyOfAdid,price,function(err,res){
-            runtimeObj.logger.info('decr after =>',res);
+            runtimeObj.logger.info(keyOfAdid,',decr after =>',res);
         });
         multi.exec();
 
