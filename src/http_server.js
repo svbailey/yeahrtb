@@ -6,9 +6,7 @@ var runtime= require('./runtime.js');
 var bid=require('./bid.js');
 var winNotify=require('./win_notify.js');
 
-
-
-paths={
+var paths={
     'bid':function(runtimeObj){
         //not post
         if(runtimeObj.req.method!='POST'){
@@ -22,9 +20,14 @@ paths={
         });
 
         runtimeObj.req.on('end',function(){
+            //开始打印请求的json
+            runtimeObj.logger.info('bid req =>'+post);
+
             runtimeObj.bidReqJSON=JSON.parse(post);
             bid.bid(runtimeObj);
             res_bid.bid(runtimeObj.res,runtimeObj.bidResJSON);
+            //结束响应的json
+            runtimeObj.logger.info('bid res =>'+runtimeObj.bidResJSON);
         });
     },
     'win':function(runtimeObj){
@@ -34,7 +37,7 @@ paths={
 };
 
 
-res_bid={
+var res_bid={
     //出价的时候的http信息返回
     'bid':function(res,content){
     res.writeHead(200, {'Content-Type': 'application/json',

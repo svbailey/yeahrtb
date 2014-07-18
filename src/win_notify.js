@@ -4,7 +4,7 @@
  * http://adserver.com/mopub/win/${AUCTION_ID}/${AUCTION_BID_ID}/$
  {AUCTION_IMP_ID}/${AUCTION_SEAT_ID}/${AUCTION_AD_ID}/${AUCTION_PRICE}/0.999
  */
-
+var constants =require('./constants.js');
 
 
 exports.winNotify=function(runtimeObj){
@@ -14,7 +14,7 @@ exports.winNotify=function(runtimeObj){
         var price=notify[8];
         runtimeObj.logger.info('adid=>',adid,'price=>',price);
 
-        var keyOfAdid='ad_budget_left_'+adid;
+        var keyOfAdid=constants.redis.keyPrefixs.ad_budget_left+adid;
         var multi=runtimeObj.redis.multi();
         multi.get(keyOfAdid,function(err,res){
             runtimeObj.logger.info(keyOfAdid,',decr before =>',res);
