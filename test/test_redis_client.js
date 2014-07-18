@@ -23,7 +23,7 @@ var
 deviceid='qwer',
 country="usa",
 category="game",
-performance = "123_320_150_iphone";
+performance = "123_320_150_iphone";//diviceid,width,height,os
 
 
 //appid,width,height,os
