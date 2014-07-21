@@ -41,3 +41,5 @@ redis_client.getAllAds(deviceid,performance,country,category,function(err,adids,
 	console.log("ads:" + ads);
 	console.log("perf:" + perf);
 });
+
+redis_client.incrCounter(deviceid,1000,30);

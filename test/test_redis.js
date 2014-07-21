@@ -10,7 +10,7 @@ client.on("error",function(err){
 	console.log("Error " + err);
 });
 
-//client.flushdb();
+client.flushdb();
 
 
 
@@ -25,7 +25,7 @@ client.set(constants.redis.keyPrefixs.ad_budget_left + "1001", "999");
 });
 */
 
-client.set(constants.redis.keyPrefixs.ad_counter + ['qwer',1000].join("_"), "3");
+//client.set(constants.redis.keyPrefixs.ad_counter + ['qwer',1000].join("_"), "3");
 
 /*client.get(constants.redis.keyPrefixs.ad_counter + ['qwer',1000].join("_"),function (err, replies) {
     console.log(constants.redis.keyPrefixs.ad_counter + ['qwer',1000].join("_") +":" + replies);
@@ -124,6 +124,19 @@ console.log(budgetlefts);
 
 		}
 		).exec();*/
+
+
+var 
+deviceid='qwer',
+country="usa",
+category="game",
+performance = "qwer_320_150_iphone";//diviceid,width,height,os
+var keyOfCounter = constants.redis.keyPrefixs.ad_counter + [deviceid, 1000].join("_");
+
+client.get(keyOfCounter,function(err,reply){
+	console.log(err);
+	console.log(reply);
+});
 
 
 

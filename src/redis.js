@@ -91,14 +91,25 @@ function decrbyBudgets(adid, price, func) {
 	});
 }
 
-function incrCounter(deviceid,adid){
-	//todo:需要做个判断，如果存在则+1，如果不存在则创建key并根据ad的period来expire，初始化为1
+function incrCounter(deviceid,adid,ttl){
 	var keyOfCounter = constants.redis.keyPrefixs.ad_counter + [deviceid, adid].join("_");
-	client.incr(keyOfCounter);
+
+	multi = client.multi();
+	multi.incr(keyOfCounter);
+	multi.ttl(keyOfCounter,function(err,reply){
+		//如果未设置过期时间
+		if(reply==-1){
+			client.expire(keyOfCounter,ttl);
+		}
+	});
+	multi.exec(function(err,replies){
+		//console.log(replies);
+	 	client.quit();
+	})
 }
 
 exports.getAllAds = getAllAds;
-exports.decrBudgets = decrBudgets;
+exports.decrbyBudgets = decrbyBudgets;
 exports.incrCounter = incrCounter;
 
 
