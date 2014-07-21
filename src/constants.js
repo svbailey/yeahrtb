@@ -7,8 +7,8 @@ module.exports = {
         host:'http://ec2-54-86-9-66.compute-1.amazonaws.com:8000'
     },
 	redis: {
-		host: '172.20.0.44',
-		port: 6378,
+		host: '127.0.0.1',
+		port: 6379,
 		keyPrefixs: {
 			ad: "adbid_",
 			ad_budget_left: "today_budget_left_",
