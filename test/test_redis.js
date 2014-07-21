@@ -42,10 +42,10 @@ client.set(constants.redis.keyPrefixs.ad_budget_left + "1001", "999");
 */
 
 
-//cpa,cpc,counter
-client.set(constants.redis.keyPrefixs.ad + "1000", "5|1|3");
+//cpa,cpc,counter(divice level),ttl(divice level)
+client.set(constants.redis.keyPrefixs.ad + "1000", "5|1|3|600");
 
-client.set(constants.redis.keyPrefixs.ad + "1001", "4|2|10");
+client.set(constants.redis.keyPrefixs.ad + "1001", "4|2|10|600");
 
 
 

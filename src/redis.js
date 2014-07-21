@@ -84,6 +84,8 @@ function getPerformance(performance, adids, ads, func) {
 	});
 }
 
+
+
 function decrbyBudgets(adid, price, func) {
 	var keyOfAdid = constants.redis.keyPrefixs.ad_budget_left + adid;
 	client.decrby(keyOfAdid, price, function(err, reply) {
@@ -91,20 +93,28 @@ function decrbyBudgets(adid, price, func) {
 	});
 }
 
-function incrCounter(deviceid,adid,ttl){
+function incrCounter(deviceid, adid,func) {
+	var keyOfAdid = constants.redis.keyPrefixs.ad + adid;
 	var keyOfCounter = constants.redis.keyPrefixs.ad_counter + [deviceid, adid].join("_");
 
 	multi = client.multi();
 	multi.incr(keyOfCounter);
-	multi.ttl(keyOfCounter,function(err,reply){
-		//如果未设置过期时间
-		if(reply==-1){
-			client.expire(keyOfCounter,ttl);
-		}
-	});
-	multi.exec(function(err,replies){
-		//console.log(replies);
-	 	client.quit();
+	multi.get(keyOfAdid);
+	multi.exec(function(err, replies) {
+		console.log(replies);
+		var ttl =parseInt(replies[1].split('|')[3]);
+		client.ttl(keyOfCounter, function(err, reply) {
+			//如果未设置过期时间
+			if (reply == -1) {
+				console.log(keyOfCounter);
+				client.expire(keyOfCounter, ttl,function(err,reply){
+					func(err);
+				});				
+			} else {
+				func(err);
+			}			
+		});	
+		
 	})
 }
 
