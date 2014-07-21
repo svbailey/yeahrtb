@@ -3,6 +3,9 @@
  */
 module.exports = {
 	host: 'http://ec2-54-86-9-66.compute-1.amazonaws.com:8000',
+    cdn:{
+        host:'http://ec2-54-86-9-66.compute-1.amazonaws.com:8000'
+    },
 	redis: {
 		host: '172.20.0.44',
 		port: 6378,
@@ -17,4 +20,4 @@ module.exports = {
 			performance: "performance_"
 		}
 	}
-}
+};

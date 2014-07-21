@@ -1,24 +1,26 @@
 /**
  * Created by zhangliming on 14-7-16.
  */
+var constants = require('./constants.js');
+
 var bid_obj = {
-    "units": 0,
     "id": "",
     "seatbid": [{
         "bid": [{
-            "iurl": "http://www.mopubbidderimageurl.com",
-            "cid": "afhjk234",
-            "crid": "ajfwep420",
+            "iurl":constants.cdn.host+'/logo.gif' ,//cdn地址
+            "cid": "afhjk234",//广告id
+            "crid": "ajfwep420",//创意id
             "price": 24.0,
-            "adid": "adfo3btnt",
-            "adomain": "http://www.mopubbidder.com",
-            "adm": "<html><b>hiii</b></html>",
-            "impid": "eigu203f"
+            "adid": "adfo3btnt",//广告id
+            "adomain": "http://www.mopubbidder.com",//广告主的域名
+            "adm": "",//
+            "impid": "eigu203f",//
+            "nurl":constants.host+'/mopub/win/${AUCTION_ID}/${AUCTION_BID_ID}/${AUCTION_IMP_ID}/${AUCTION_SEAT_ID}/${AUCTION_AD_ID}/${AUCTION_PRICE}/'
+
         }]
     }],
-    "cur": "USD",
-    "bidid": "dv09gn3k"
-}
+    "cur": "USD"
+};
 
 
 
