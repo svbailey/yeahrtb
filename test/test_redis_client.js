@@ -35,7 +35,7 @@ performance = "123_320_150_iphone";//diviceid,width,height,os
 //perf:hash[ctr,cvr]
 
 
-redis_client.getAllAds(deviceid,performance,country,category,function(err,adids,ads,perf){
+/*redis_client.getAllAds(deviceid,performance,country,category,function(err,adids,ads,perf){
 	console.log("err:" + err);
 	console.log("adids:" + adids);
 	console.log("ads:" + ads);
@@ -47,3 +47,10 @@ redis_client.incrCounter(deviceid,1000,function(err){
 	console.log("err2:" + err);
 
 });
+
+*/
+redis_client.getAllAds2(deviceid,performance,country,category,function(){
+
+});
+
+

@@ -16,7 +16,8 @@
     "repository": "morningzhang/yeahrtb",
     "dependencies": {
         "log4js": "0.6.15",
-        "redis":"0.11.0"
+        "redis":"0.11.0",
+        "async":"0.9.0"
     },
     "devDependencies": {
 
